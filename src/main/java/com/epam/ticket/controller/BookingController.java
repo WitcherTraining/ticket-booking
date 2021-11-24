@@ -19,14 +19,10 @@ public class BookingController {
     }
 
     @RequestMapping("/")
-    public ModelAndView root() {
+    public ModelAndView getIndex() {
         ModelAndView modelAndView = new ModelAndView();
         modelAndView.setViewName("index");
         return modelAndView;
     }
 
-    @GetMapping("/user")
-    public User getUser(@RequestParam int id) {
-        return bookingFacade.getUserById(id);
-    }
 }

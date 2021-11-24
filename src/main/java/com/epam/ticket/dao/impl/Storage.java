@@ -27,6 +27,7 @@ public class Storage {
     private Map<Long, Ticket> ticketMap = new ConcurrentHashMap<>();
     private Map<Long, Event> eventMap = new ConcurrentHashMap<>();
     private static Storage storage = null;
+    private final List<Long> ids = new ArrayList<>(Arrays.asList(1L, 2L, 3L));
 
     @Autowired
     private ApplicationContext context;
@@ -98,7 +99,7 @@ public class Storage {
 
         for (int i = 0; i < userIds.size(); i++) {
             User user = new UserImpl();
-            user.setId(Long.parseLong(userIds.get(i)));
+            user.setId(this.ids.get(i));
             user.setName(names.get(i));
             user.setEmail(emails.get(i));
             usersToReturn.add(user);
@@ -115,13 +116,14 @@ public class Storage {
 
         for (int i = 0; i < ids.size(); i++) {
             Event event = new EventImpl();
-            event.setId(Long.parseLong(ids.get(i)));
+            event.setId(this.ids.get(i));
             event.setTitle(titles.get(i));
-            try {
-                event.setDate(new SimpleDateFormat("dd/MM/yyyy HH:mm").parse(dates.get(i)));
-            } catch (ParseException e) {
-                LOGGER.error(String.format("Cannot parse initial date from this string: [%s]", dates.get(i)), e);
-            }
+//            try {
+//                event.setDate(new SimpleDateFormat("dd/MM/yyyy HH:mm").parse(dates.get(i)));
+            event.setDate(new Date());
+//            } catch (ParseException e) {
+//                LOGGER.error(String.format("Cannot parse initial date from this string: [%s]", dates.get(i)), e);
+//            }
             eventsToReturn.add(event);
         }
 
@@ -138,11 +140,11 @@ public class Storage {
 
         for (int i = 0; i < ids.size(); i++) {
             Ticket ticket = new TicketImpl();
-            ticket.setId(Long.parseLong(ids.get(i)));
-            ticket.setEventId(Long.parseLong(eventIds.get(i)));
-            ticket.setUserId(Long.parseLong(userIds.get(i)));
-            ticket.setCategory(Ticket.Category.valueOf(categories.get(i)));
-            ticket.setPlace(Integer.parseInt(places.get(i)));
+            ticket.setId(this.ids.get(i));
+            ticket.setEventId(this.ids.get(i));
+            ticket.setUserId(this.ids.get(i));
+            ticket.setCategory(Ticket.Category.STANDARD);
+            ticket.setPlace(Math.toIntExact(this.ids.get(i)));
 
             ticketsToReturn.add(ticket);
         }
