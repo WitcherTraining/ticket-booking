@@ -8,7 +8,6 @@ import com.epam.ticket.model.impl.EventImpl;
 import com.epam.ticket.model.impl.TicketImpl;
 import com.epam.ticket.model.impl.UserImpl;
 import io.cucumber.datatable.DataTable;
-import io.cucumber.java.Before;
 import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
@@ -100,7 +99,7 @@ public class UserStandardWorkflowSteps {
         expectedTicket.setUserId(Long.parseLong(data.get(1).get(1)));
         expectedTicket.setEventId(Long.parseLong(data.get(1).get(2)));
         expectedTicket.setPlace(Integer.parseInt(data.get(1).get(3)));
-        expectedTicket.setCategory(Ticket.Category.valueOf(data.get(1).get(4)));
+        expectedTicket.setCategory(data.get(1).get(4));
 
         final List<Ticket> actualBookedTickets = this.bookingFacade.getBookedTickets(expectedUser, 1, 1);
 

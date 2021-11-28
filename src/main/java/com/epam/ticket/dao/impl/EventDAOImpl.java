@@ -62,6 +62,7 @@ public class EventDAOImpl implements EventDAO {
 
     private Event mapEvent(Event event, Event eventToUpdate) {
         final Event updatedEvent = new EventImpl();
+        updatedEvent.setId(eventToUpdate.getId());
         updatedEvent.setDate(Objects.nonNull(event.getDate()) ? event.getDate() : eventToUpdate.getDate());
         updatedEvent.setTitle(Objects.nonNull(event.getTitle()) ? event.getTitle() : eventToUpdate.getTitle());
         return updatedEvent;

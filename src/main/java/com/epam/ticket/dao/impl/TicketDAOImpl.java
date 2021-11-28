@@ -70,6 +70,7 @@ public class TicketDAOImpl implements TicketDAO {
 
     private Ticket mapTicket(Ticket ticket, Ticket ticketToUpdate) {
         final Ticket updatedTicket = new TicketImpl();
+        updatedTicket.setId(ticketToUpdate.getId());
         updatedTicket.setCategory(Objects.nonNull(ticket.getCategory()) ? ticket.getCategory() : ticketToUpdate.getCategory());
         updatedTicket.setEventId(ticket.getEventId());
         updatedTicket.setUserId(ticket.getUserId());

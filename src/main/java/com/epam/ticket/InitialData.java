@@ -1,9 +1,13 @@
 package com.epam.ticket;
 
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.stereotype.Component;
+import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.PropertySource;
+import org.springframework.context.support.PropertySourcesPlaceholderConfigurer;
 
-@Component
+@Configuration
+@PropertySource("classpath:external-boot.properties")
 public class InitialData {
     @Value("${user.ids}")
     String userIds;
@@ -37,6 +41,11 @@ public class InitialData {
 
     @Value("${ticket.places}")
     String ticketPlaces;
+
+    @Bean
+    public static PropertySourcesPlaceholderConfigurer placeholderConfigurer() {
+        return new PropertySourcesPlaceholderConfigurer();
+    }
 
     public String getUserIds() {
         return userIds;

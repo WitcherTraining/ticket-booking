@@ -71,6 +71,7 @@ public class UserDAOImpl implements UserDAO {
 
     private User mapUser(User user, User userToUpdate) {
         final User updatedUser = new UserImpl();
+        updatedUser.setId(userToUpdate.getId());
         updatedUser.setName(Objects.nonNull(user.getName()) ? user.getName() : userToUpdate.getName());
         updatedUser.setEmail(Objects.nonNull(user.getEmail()) ? user.getEmail() : userToUpdate.getEmail());
         return updatedUser;

@@ -49,7 +49,7 @@ public class TicketServiceImpl implements TicketService {
         ticket.setEventId(event.getId());
         ticket.setUserId(user.getId());
         ticket.setPlace(place);
-        ticket.setCategory(category);
+        ticket.setCategory(String.valueOf(category));
 
         return this.ticketDao.create(ticket);
     }

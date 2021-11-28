@@ -16,8 +16,8 @@ public interface Ticket {
     void setEventId(long eventId);
     long getUserId();
     void setUserId(long userId);
-    Category getCategory();
-    void setCategory(Category category);
+    String getCategory();
+    void setCategory(String category);
     int getPlace();
     void setPlace(int place);
 

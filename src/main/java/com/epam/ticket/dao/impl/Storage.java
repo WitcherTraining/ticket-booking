@@ -13,48 +13,54 @@ import org.springframework.context.ApplicationContext;
 import org.springframework.stereotype.Component;
 
 import javax.annotation.PostConstruct;
+import java.io.IOException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
+import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.stream.Collectors;
 
 @Component
 public class Storage {
     private static final Logger LOGGER = Logger.getLogger(Storage.class);
+    private static final String FILE_NAME = "src/main/resources/tickets.xml";
 
     private Map<Long, User> userMap = new ConcurrentHashMap<>();
     private Map<Long, Ticket> ticketMap = new ConcurrentHashMap<>();
     private Map<Long, Event> eventMap = new ConcurrentHashMap<>();
     private static Storage storage = null;
-    private final List<Long> ids = new ArrayList<>(Arrays.asList(1L, 2L, 3L));
 
     @Autowired
     private ApplicationContext context;
+    @Autowired
+    private XmlUnmarshaller xmlUnmarshaller;
 
     @PostConstruct
-    public Storage init() {
+    public Storage init() throws IOException {
         if (storage == null) {
             storage = new Storage();
         }
         final InitialData initialData = context.getBean(InitialData.class);
 
         LOGGER.info("Initialize storage...");
-        System.out.println("Initialize storage...");
 
         final List<User> usersFromProperties = this.getUsersFromProperties(initialData.getUserIds(),
-                initialData.getUserNames(),
-                initialData.getUserEmails());
+                                                                           initialData.getUserNames(),
+                                                                           initialData.getUserEmails());
 
         final List<Event> eventsFromProperties = this.getEventsFromProperties(initialData.getEventIds(),
-                initialData.getEventTitles(),
-                initialData.getEventDates());
+                                                                              initialData.getEventTitles(),
+                                                                              initialData.getEventDates());
 
         final List<Ticket> ticketsFromProperties = this.getTicketsFromProperties(initialData.getTicketIds(),
-                initialData.getEventIds(),
-                initialData.getUserIds(),
-                initialData.getTicketCategories(),
-                initialData.getTicketPlaces());
+                                                                                 initialData.getEventIds(),
+                                                                                 initialData.getUserIds(),
+                                                                                 initialData.getTicketCategories(),
+                                                                                 initialData.getTicketPlaces());
+        ticketsFromProperties.addAll(this.xmlUnmarshaller.preLoadTickets(FILE_NAME));
 
         this.populateStorageMaps(usersFromProperties, eventsFromProperties, ticketsFromProperties);
 
@@ -99,7 +105,7 @@ public class Storage {
 
         for (int i = 0; i < userIds.size(); i++) {
             User user = new UserImpl();
-            user.setId(this.ids.get(i));
+            user.setId(Long.parseLong(userIds.get(i)));
             user.setName(names.get(i));
             user.setEmail(emails.get(i));
             usersToReturn.add(user);
@@ -116,14 +122,13 @@ public class Storage {
 
         for (int i = 0; i < ids.size(); i++) {
             Event event = new EventImpl();
-            event.setId(this.ids.get(i));
+            event.setId(Long.parseLong(ids.get(i)));
             event.setTitle(titles.get(i));
-//            try {
-//                event.setDate(new SimpleDateFormat("dd/MM/yyyy HH:mm").parse(dates.get(i)));
-            event.setDate(new Date());
-//            } catch (ParseException e) {
-//                LOGGER.error(String.format("Cannot parse initial date from this string: [%s]", dates.get(i)), e);
-//            }
+            try {
+                event.setDate(new SimpleDateFormat("MM/dd/yyyy HH:mm").parse(dates.get(i)));
+            } catch (ParseException e) {
+                LOGGER.error(String.format("Cannot parse initial date from this string: [%s]", dates.get(i)), e);
+            }
             eventsToReturn.add(event);
         }
 
@@ -140,11 +145,11 @@ public class Storage {
 
         for (int i = 0; i < ids.size(); i++) {
             Ticket ticket = new TicketImpl();
-            ticket.setId(this.ids.get(i));
-            ticket.setEventId(this.ids.get(i));
-            ticket.setUserId(this.ids.get(i));
-            ticket.setCategory(Ticket.Category.STANDARD);
-            ticket.setPlace(Math.toIntExact(this.ids.get(i)));
+            ticket.setId(Long.parseLong(ids.get(i)));
+            ticket.setEventId(Long.parseLong(eventIds.get(i)));
+            ticket.setUserId(Long.parseLong(userIds.get(i)));
+            ticket.setCategory(categories.get(i));
+            ticket.setPlace(Integer.parseInt(places.get(i)));
 
             ticketsToReturn.add(ticket);
         }

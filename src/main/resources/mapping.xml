@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<mapping>
+    <class name="com.epam.ticket.model.impl.TicketsContainer">
+        <map-to xml="tickets"/>
+        <field name="tickets" type="com.epam.ticket.model.impl.TicketImpl" collection="arraylist">
+            <bind-xml name="ticket" node="element"/>
+        </field>
+    </class>
+    <class name="com.epam.ticket.model.impl.TicketImpl">
+        <field name="id" type="long">
+            <bind-xml name="id" node="attribute"/>
+        </field>
+        <field name="eventId" type="long"/>
+        <field name="userId" type="long"/>
+        <field name="category" type="string"/>
+        <field name="place" type="integer"/>
+    </class>
+</mapping>
