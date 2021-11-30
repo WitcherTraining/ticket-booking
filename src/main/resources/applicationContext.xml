@@ -12,6 +12,16 @@
     <context:annotation-config/>
     <context:property-placeholder location="external-boot.properties"/>
 
+    <bean id="bookingFacade" class="com.epam.ticket.facade.impl.BookingFacadeImpl"/>
+    <bean id="userService" class="com.epam.ticket.service.impl.UserServiceImpl"/>
+    <bean id="ticketService" class="com.epam.ticket.service.impl.TicketServiceImpl"/>
+    <bean id="eventService" class="com.epam.ticket.service.impl.EventServiceImpl"/>
+    <bean id="userDAO" class="com.epam.ticket.dao.impl.UserDAOImpl"/>
+    <bean id="ticketDAO" class="com.epam.ticket.dao.impl.TicketDAOImpl"/>
+    <bean id="eventDAO" class="com.epam.ticket.dao.impl.EventDAOImpl"/>
+    <bean id="storage" class="com.epam.ticket.dao.impl.Storage"/>
+    <bean id="initialData" class="com.epam.ticket.InitialData"/>
+
     <bean id="xmlUnmarshaller" class="com.epam.ticket.dao.impl.XmlUnmarshaller">
         <property name="marshaller" ref="castorMarshaller"/>
         <property name="unmarshaller" ref="castorMarshaller"/>

@@ -164,6 +164,7 @@ class TicketDAOImplTest {
         ticket.setUserId(1L);
         ticket.setEventId(1L);
         ticket.setPlace(10);
+        ticket.setCategory(String.valueOf(Ticket.Category.STANDARD));
         return ticket;
     }
 }

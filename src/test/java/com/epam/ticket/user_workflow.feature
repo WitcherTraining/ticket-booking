@@ -24,7 +24,7 @@ Feature: Perform user operations
     When I trying to book the ticket with user ID 4 and event ID 4 and place number 22 and ticket category "PREMIUM"
     Then The following information is received for the ticket booked by this user with ID 4:
       | id | userId | eventId | place | category |
-      | 4  | 4      | 4       | 22    | PREMIUM  |
+      | 7  | 4      | 4       | 22    | PREMIUM  |
 
   @CancelTicket
   Scenario: Canceling ticket
