@@ -2,14 +2,30 @@ package com.epam.ticket.model.impl;
 
 import com.epam.ticket.model.api.Ticket;
 
+import javax.persistence.*;
 import java.util.Objects;
 
+@Entity
+@Table(name = "ticket")
 public class TicketImpl implements Ticket {
 
+    @Id
+    @Column(name = "id")
+    @GeneratedValue(strategy = GenerationType.AUTO)
     private long id;
-    private long eventId;
-    private long userId;
+
+    @ManyToOne
+    @JoinColumn(name = "event_id", nullable = false, referencedColumnName = "id")
+    private EventImpl eventImpl;
+
+    @ManyToOne
+    @JoinColumn(name = "user_id", nullable = false, referencedColumnName = "id")
+    private UserImpl userImpl;
+
+    @Column(name = "category")
     private Category category;
+
+    @Column(name = "place")
     private int place;
 
     @Override
@@ -22,24 +38,22 @@ public class TicketImpl implements Ticket {
         this.id = id;
     }
 
-    @Override
-    public long getEventId() {
-        return eventId;
+    public EventImpl getEventImpl() {
+        return eventImpl;
+    }
+
+    public void setEventImpl(EventImpl eventImpl) {
+        this.eventImpl = eventImpl;
     }
 
     @Override
-    public void setEventId(long eventId) {
-        this.eventId = eventId;
+    public UserImpl getUserImpl() {
+        return userImpl;
     }
 
     @Override
-    public long getUserId() {
-        return userId;
-    }
-
-    @Override
-    public void setUserId(long userId) {
-        this.userId = userId;
+    public void setUserImpl(UserImpl userImpl) {
+        this.userImpl = userImpl;
     }
 
     @Override
@@ -62,31 +76,28 @@ public class TicketImpl implements Ticket {
         this.place = place;
     }
 
-    @Override
-    public String toString() {
-        return "TicketImpl{" +
-               "id=" + id +
-               ", eventId=" + eventId +
-               ", userId=" + userId +
-               ", category=" + category +
-               ", place=" + place +
-               '}';
-    }
 
     @Override
     public boolean equals(Object o) {
-        if (this == o) {
-            return true;
-        }
-        if (o == null || getClass() != o.getClass()) {
-            return false;
-        }
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
         TicketImpl ticket = (TicketImpl) o;
-        return id == ticket.id && eventId == ticket.eventId && userId == ticket.userId && place == ticket.place && category == ticket.category;
+        return id == ticket.id && place == ticket.place && Objects.equals(eventImpl, ticket.eventImpl) && Objects.equals(userImpl, ticket.userImpl) && category == ticket.category;
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, eventId, userId, category, place);
+        return Objects.hash(id, eventImpl, userImpl, category, place);
+    }
+
+    @Override
+    public String toString() {
+        return "TicketImpl{" +
+                "id=" + id +
+                ", eventImpl=" + eventImpl +
+                ", userImpl=" + userImpl +
+                ", category=" + category +
+                ", place=" + place +
+                '}';
     }
 }

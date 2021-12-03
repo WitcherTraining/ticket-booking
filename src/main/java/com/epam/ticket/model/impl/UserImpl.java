@@ -2,13 +2,23 @@ package com.epam.ticket.model.impl;
 
 import com.epam.ticket.model.api.User;
 
+import javax.persistence.*;
 import java.util.Objects;
 
+@Entity
+@Table(name="user")
 public class UserImpl implements User {
 
-    long id;
-    String name;
-    String email;
+    @Id
+    @Column(name = "id")
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    private long id;
+
+    @Column(name="name")
+    private String name;
+
+    @Column(name="email")
+    private String email;
 
     public long getId() {
         return id;

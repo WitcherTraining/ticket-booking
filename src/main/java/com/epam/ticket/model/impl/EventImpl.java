@@ -2,14 +2,27 @@ package com.epam.ticket.model.impl;
 
 import com.epam.ticket.model.api.Event;
 
+import javax.persistence.*;
 import java.util.Date;
 import java.util.Objects;
 
+@Entity
+@Table(name = "event")
 public class EventImpl implements Event {
 
+    @Id
+    @Column(name = "id")
+    @GeneratedValue(strategy = GenerationType.AUTO)
     private long Id;
+
+    @Column(name = "title")
     private String title;
+
+    @Column(name = "date")
     private Date date;
+
+    @Column(name = "ticket_price")
+    private int ticketPrice;
 
     @Override
     public long getId() {
@@ -39,6 +52,14 @@ public class EventImpl implements Event {
     @Override
     public void setDate(Date date) {
         this.date = date;
+    }
+
+    public int getTicketPrice() {
+        return ticketPrice;
+    }
+
+    public void setTicketPrice(int ticketPrice) {
+        this.ticketPrice = ticketPrice;
     }
 
     @Override
