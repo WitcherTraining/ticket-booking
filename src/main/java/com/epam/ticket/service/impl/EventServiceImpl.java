@@ -1,6 +1,6 @@
 package com.epam.ticket.service.impl;
 
-import com.epam.ticket.dao.api.EventDAO;
+import com.epam.ticket.dao.EventDAO;
 import com.epam.ticket.exception.EntityNotFoundException;
 import com.epam.ticket.model.api.Event;
 import com.epam.ticket.model.impl.EventImpl;
@@ -25,7 +25,7 @@ public class EventServiceImpl implements EventService {
     @Override
     public Event getEventById(long eventId) {
         try {
-            return this.eventDAO.findOne(eventId);
+            return this.eventDAO.findById(eventId).orElseThrow(EntityNotFoundException::new);
         } catch (EntityNotFoundException e) {
             LOGGER.error(String.format("Cannot find event with ID [%s]", eventId), e);
         }
@@ -43,7 +43,7 @@ public class EventServiceImpl implements EventService {
 
     @Override
     public List<Event> getEventsForDay(Date day, int pageSize, int pageNum) {
-        return this.eventDAO.findAll()
+        return  this.eventDAO.findAll()
                 .stream()
                 .filter(event -> Objects.equals(event.getDate(), day))
                 .collect(Collectors.toList());
@@ -51,13 +51,13 @@ public class EventServiceImpl implements EventService {
 
     @Override
     public Event createEvent(Event event) {
-        return this.eventDAO.create(event);
+        return this.eventDAO.save((EventImpl) event);
     }
 
     @Override
     public Event updateEvent(Event event) {
         try {
-            return this.eventDAO.update(event);
+            return this.eventDAO.save((EventImpl) event);
         } catch (EntityNotFoundException e) {
             LOGGER.error(String.format("Cannot find event [%s]", event), e);
         }
@@ -68,7 +68,8 @@ public class EventServiceImpl implements EventService {
     @Override
     public boolean deleteEvent(long eventId) {
         try {
-            return this.eventDAO.remove(eventId);
+            this.eventDAO.deleteById(eventId);
+            return !this.eventDAO.existsById(eventId);
         } catch (EntityNotFoundException e) {
             LOGGER.error(String.format("Cannot remove event with ID [%s]", eventId), e);
         }

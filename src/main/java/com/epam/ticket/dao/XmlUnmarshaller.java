@@ -1,4 +1,4 @@
-package com.epam.ticket.dao.impl;
+package com.epam.ticket.dao;
 
 import com.epam.ticket.model.impl.TicketImpl;
 import com.epam.ticket.model.impl.TicketsContainer;

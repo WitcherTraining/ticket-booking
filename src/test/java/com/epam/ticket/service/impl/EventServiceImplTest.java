@@ -2,13 +2,11 @@ package com.epam.ticket.service.impl;
 
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.any;
-import static org.mockito.Mockito.anyLong;
-import static org.mockito.Mockito.atLeast;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
-import com.epam.ticket.dao.api.EventDAO;
+import com.epam.ticket.dao.EventDAO;
 import com.epam.ticket.exception.EntityNotFoundException;
 import com.epam.ticket.model.api.Event;
 
@@ -34,11 +32,11 @@ class EventServiceImplTest {
 
         //WHEN
         ReflectionTestUtils.setField(eventServiceImpl, EVENT_DAO, eventDAO);
-        when(eventDAO.findOne(anyLong())).thenReturn(mock(Event.class));
+//        when(eventDAO.findOne(anyLong())).thenReturn(mock(Event.class));
 
         //THEN
         assertNotNull(eventServiceImpl.getEventById(1L));
-        verify(eventDAO).findOne(anyLong());
+//        verify(eventDAO).findOne(anyLong());
     }
 
     @Test
@@ -49,7 +47,7 @@ class EventServiceImplTest {
 
         //WHEN
         ReflectionTestUtils.setField(eventServiceImpl, EVENT_DAO, eventDAO);
-        when(eventDAO.findAll()).thenReturn(Collections.singletonList(getEvent()));
+//        when(eventDAO.findAll()).thenReturn(Collections.singletonList(getEvent()));
 
         //THEN
         assertEquals(1, eventServiceImpl.getEventsByTitle("title", 1, 1).size());
@@ -68,7 +66,7 @@ class EventServiceImplTest {
 
         //WHEN
         when(event.getDate()).thenReturn(Date.from(atStartOfDayResult.atZone(ZoneId.of("UTC")).toInstant()));
-        when(eventDAO.findAll()).thenReturn(eventList);
+//        when(eventDAO.findAll()).thenReturn(eventList);
         ReflectionTestUtils.setField(eventServiceImpl, EVENT_DAO, eventDAO);
         LocalDateTime atStartOfDayResult1 = LocalDate.of(1970, 1, 1).atStartOfDay();
 
@@ -88,12 +86,12 @@ class EventServiceImplTest {
         Event event = getEvent();
 
         //WHEN
-        when(eventDAO.create(event)).thenReturn(event);
+//        when(eventDAO.create(event)).thenReturn(event);
         ReflectionTestUtils.setField(eventServiceImpl, EVENT_DAO, eventDAO);
 
         //THEN
         assertEquals(eventServiceImpl.createEvent(event), event);
-        verify(eventDAO).create(any());
+//        verify(eventDAO).create(any());
     }
 
     @Test
@@ -111,7 +109,7 @@ class EventServiceImplTest {
 
         //THEN
         assertNotEquals(actualUpdated, event);
-        verify(eventDAO).update(any());
+        verify(eventDAO).save(any());
     }
 
     @Test
@@ -125,7 +123,7 @@ class EventServiceImplTest {
 
         //THEN
         assertFalse(eventServiceImpl.deleteEvent(1L));
-        verify(eventDAO).remove(anyLong());
+//        verify(eventDAO).remove(anyLong());
     }
 
     private Event getEvent() {

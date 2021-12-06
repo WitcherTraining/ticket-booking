@@ -1,11 +1,12 @@
 package com.epam.ticket.model.api;
 
+import java.io.Serializable;
 import java.util.Date;
 
 /**
  * Created by maksym_govorischev.
  */
-public interface Event {
+public interface Event extends Serializable {
     /**
      * Event id. UNIQUE.
      * @return Event Id

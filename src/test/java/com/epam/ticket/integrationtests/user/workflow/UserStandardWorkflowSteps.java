@@ -96,8 +96,8 @@ public class UserStandardWorkflowSteps {
 
         final Ticket expectedTicket = new TicketImpl();
         expectedTicket.setId(Long.parseLong(data.get(1).get(0)));
-        expectedTicket.setUserId(Long.parseLong(data.get(1).get(1)));
-        expectedTicket.setEventId(Long.parseLong(data.get(1).get(2)));
+//        expectedTicket.setUserId(Long.parseLong(data.get(1).get(1)));
+//        expectedTicket.setEventId(Long.parseLong(data.get(1).get(2)));
         expectedTicket.setPlace(Integer.parseInt(data.get(1).get(3)));
         expectedTicket.setCategory(data.get(1).get(4));
 

@@ -3,7 +3,9 @@ package com.epam.ticket.model.api;
 
 import com.epam.ticket.model.impl.UserImpl;
 
-public interface UserAccount {
+import java.io.Serializable;
+
+public interface UserAccount extends Serializable {
 
     long getId();
 
@@ -13,7 +15,7 @@ public interface UserAccount {
 
     void setPrepaidMoney(int money);
 
-    UserImpl getUser();
+    User getUser();
 
-    void setUser(UserImpl userImpl);
+    void setUser(UserImpl user);
 }

@@ -3,22 +3,53 @@ package com.epam.ticket.model.impl;
 import com.epam.ticket.model.api.User;
 
 import javax.persistence.*;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Objects;
 
 @Entity
-@Table(name="user")
+@Table(name = "userimpl")
 public class UserImpl implements User {
 
     @Id
     @Column(name = "id")
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @SequenceGenerator(
+            name = "userimpl_id_seq",
+            sequenceName = "user_id_seq",
+            allocationSize = 1)
+    @GeneratedValue(
+            strategy = GenerationType.SEQUENCE,
+            generator = "userimpl_id_seq"
+    )
     private long id;
 
-    @Column(name="name")
+    @Column(name = "name")
     private String name;
 
-    @Column(name="email")
+    @Column(name = "email")
     private String email;
+
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "user")
+    private List<UserAccountImpl> userAccounts;
+
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "user")
+    List<TicketImpl> tickets = new ArrayList<>();
+
+    public List<TicketImpl> getTickets() {
+        return tickets;
+    }
+
+    public void setTickets(List<TicketImpl> tickets) {
+        this.tickets = tickets;
+    }
+
+    public List<UserAccountImpl> getUserAccounts() {
+        return userAccounts;
+    }
+
+    public void setUserAccounts(List<UserAccountImpl> userAccounts) {
+        this.userAccounts = userAccounts;
+    }
 
     public long getId() {
         return id;

@@ -1,9 +1,14 @@
 package com.epam.ticket.model.api;
 
+import com.epam.ticket.model.impl.TicketImpl;
+
+import java.io.Serializable;
+import java.util.List;
+
 /**
  * Created by maksym_govorischev on 14/03/14.
  */
-public interface User {
+public interface User extends Serializable {
     /**
      * User Id. UNIQUE.
      * @return User Id.
@@ -19,4 +24,5 @@ public interface User {
      */
     String getEmail();
     void setEmail(String email);
+    List<TicketImpl> getTickets();
 }

@@ -6,11 +6,22 @@
             <bind-xml name="ticket" node="element"/>
         </field>
     </class>
+    <class name="com.epam.ticket.model.impl.UserImpl">
+        <field name="id" type="long"/>
+        <field name="name" type="string"/>
+        <field name="email" type="string"/>
+    </class>
+    <class name="com.epam.ticket.model.impl.EventImpl">
+        <field name="id" type="long"/>
+        <field name="title" type="string"/>
+        <field name="ticketPrice" type="integer"/>
+    </class>
     <class name="com.epam.ticket.model.impl.TicketImpl">
         <field name="id" type="long">
             <bind-xml name="id" node="attribute"/>
         </field>
-        <field name="eventId" type="long"/>
+        <field name="user" type="com.epam.ticket.model.impl.UserImpl" node="element"/>
+        <field name="event" type="com.epam.ticket.model.impl.EventImpl" node="element"/>
         <field name="userId" type="long"/>
         <field name="category" type="string"/>
         <field name="place" type="integer"/>

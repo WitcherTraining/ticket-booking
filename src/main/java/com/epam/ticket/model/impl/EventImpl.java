@@ -3,16 +3,25 @@ package com.epam.ticket.model.impl;
 import com.epam.ticket.model.api.Event;
 
 import javax.persistence.*;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 import java.util.Objects;
 
 @Entity
-@Table(name = "event")
+@Table(name = "eventimpl")
 public class EventImpl implements Event {
 
     @Id
     @Column(name = "id")
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @SequenceGenerator(
+            name="eventimpl_id_seq",
+            sequenceName="event_id_seq",
+            allocationSize=1)
+    @GeneratedValue(
+            strategy = GenerationType.SEQUENCE,
+            generator="eventimpl_id_seq"
+    )
     private long Id;
 
     @Column(name = "title")
@@ -23,6 +32,17 @@ public class EventImpl implements Event {
 
     @Column(name = "ticket_price")
     private int ticketPrice;
+
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "event")
+    List<TicketImpl> tickets = new ArrayList<>();
+
+    public List<TicketImpl> getTickets() {
+        return tickets;
+    }
+
+    public void setTickets(List<TicketImpl> tickets) {
+        this.tickets = tickets;
+    }
 
     @Override
     public long getId() {

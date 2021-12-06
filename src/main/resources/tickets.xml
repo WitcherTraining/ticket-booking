@@ -1,21 +1,49 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <tickets>
+
     <ticket id="4">
-        <userId>1</userId>
+        <user>
+            <id>2</id>
+            <name>Sara</name>
+            <email>sara@yandex.ru</email>
+        </user>
+        <event>
+            <id>1</id>
+            <title>concert</title>
+            <ticketPrice>100</ticketPrice>
+        </event>
         <category>PREMIUM</category>
-        <eventId>1</eventId>
         <place>560</place>
     </ticket>
+
     <ticket id="5">
-        <userId>1</userId>
+        <user>
+            <id>1</id>
+            <name>Lera</name>
+            <email>lera@gmail.com</email>
+        </user>
+        <event>
+            <id>2</id>
+            <title>cinema</title>
+            <ticketPrice>1700</ticketPrice>
+        </event>
         <category>PREMIUM</category>
-        <eventId>1</eventId>
-        <place>156</place>
+        <place>58</place>
     </ticket>
+
     <ticket id="6">
-        <userId>1</userId>
+        <user>
+            <id>3</id>
+            <name>Sara</name>
+            <email>sara@yandex.ru</email>
+        </user>
+        <event>
+            <id>3</id>
+            <title>training</title>
+            <ticketPrice>2000</ticketPrice>
+        </event>
         <category>PREMIUM</category>
-        <eventId>1</eventId>
-        <place>6</place>
+        <place>588</place>
     </ticket>
+
 </tickets>

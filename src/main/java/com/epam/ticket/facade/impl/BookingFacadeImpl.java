@@ -1,15 +1,22 @@
 package com.epam.ticket.facade.impl;
 
+import com.epam.ticket.InitialData;
 import com.epam.ticket.facade.api.BookingFacade;
 import com.epam.ticket.model.api.Event;
 import com.epam.ticket.model.api.Ticket;
 import com.epam.ticket.model.api.User;
 import com.epam.ticket.service.api.EventService;
 import com.epam.ticket.service.api.TicketService;
+import com.epam.ticket.service.api.UserAccountService;
 import com.epam.ticket.service.api.UserService;
+import com.epam.ticket.service.impl.InitDBServiceImpl;
 import org.apache.log4j.Logger;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.ApplicationContext;
 import org.springframework.stereotype.Service;
 
+import javax.annotation.PostConstruct;
+import java.io.IOException;
 import java.util.Date;
 import java.util.List;
 
@@ -20,6 +27,12 @@ public class BookingFacadeImpl implements BookingFacade {
     private UserService userService;
     private TicketService ticketService;
     private final EventService eventService;
+    @Autowired
+    private UserAccountService userAccountService;
+    @Autowired
+    private ApplicationContext context;
+    @Autowired
+    private InitDBServiceImpl initDBService;
 
     public BookingFacadeImpl(UserService userService, TicketService ticketService, EventService eventService) {
         this.userService = userService;
@@ -100,9 +113,9 @@ public class BookingFacadeImpl implements BookingFacade {
     }
 
     @Override
-    public Ticket bookTicket(long userId, long eventId, int place, Ticket.Category category) {
+    public Ticket bookTicket(long userAccountId, long eventId, int place, Ticket.Category category) {
         LOGGER.info("Trying to book ticket...");
-        return this.ticketService.bookTicket(userId, eventId, place, category);
+        return this.ticketService.bookTicket(userAccountId, eventId, place, category);
     }
 
     @Override
@@ -121,5 +134,17 @@ public class BookingFacadeImpl implements BookingFacade {
     public boolean cancelTicket(long ticketId) {
         LOGGER.info(String.format("Trying to cancel ticket by ID: [%s]", ticketId));
         return this.ticketService.cancelTicket(ticketId);
+    }
+
+    @Override
+    public void refillMoney() {
+        this.userAccountService.refillPrepaidMoneyForAll();
+    }
+
+    @PostConstruct
+    public void init() throws IOException {
+        final InitialData initialData = context.getBean(InitialData.class);
+        this.initDBService.saveInitialDataInDB(initialData);
+        this.refillMoney();
     }
 }

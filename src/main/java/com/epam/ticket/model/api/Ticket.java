@@ -3,10 +3,12 @@ package com.epam.ticket.model.api;
 import com.epam.ticket.model.impl.EventImpl;
 import com.epam.ticket.model.impl.UserImpl;
 
+import java.io.Serializable;
+
 /**
  * Created by maksym_govorischev.
  */
-public interface Ticket {
+public interface Ticket extends Serializable {
     public enum Category {STANDARD, PREMIUM, BAR}
 
     /**
@@ -18,13 +20,9 @@ public interface Ticket {
 
     void setId(long id);
 
-    EventImpl getEventImpl();
+    Event getEvent();
 
-    void setEventImpl(EventImpl eventImpl);
-
-    UserImpl getUserImpl();
-
-    void setUserImpl(UserImpl userImpl);
+    User getUser();
 
     String getCategory();
 

@@ -27,6 +27,9 @@ public class InitialData {
     @Value("${event.dates}")
     String eventDates;
 
+    @Value("${event.prices}")
+    String eventPrices;
+
     @Value("${ticket.ids}")
     String ticketIds;
 
@@ -35,6 +38,12 @@ public class InitialData {
 
     @Value("${ticket.userIds}")
     String ticketUserIds;
+
+    @Value("${account.ids}")
+    String accountIds;
+
+    @Value("${account.money}")
+    String accountMoney;
 
     @Value("${ticket.categories}")
     String ticketCategories;
@@ -89,5 +98,17 @@ public class InitialData {
 
     public String getTicketPlaces() {
         return ticketPlaces;
+    }
+
+    public String getEventPrices() {
+        return eventPrices;
+    }
+
+    public String getAccountIds() {
+        return accountIds;
+    }
+
+    public String getAccountMoney() {
+        return accountMoney;
     }
 }

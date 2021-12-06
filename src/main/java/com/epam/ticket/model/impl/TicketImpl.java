@@ -6,23 +6,31 @@ import javax.persistence.*;
 import java.util.Objects;
 
 @Entity
-@Table(name = "ticket")
+@Table(name = "ticketimpl")
 public class TicketImpl implements Ticket {
 
     @Id
+    @SequenceGenerator(
+            name="ticketimpl_id_seq",
+            sequenceName="ticket_id_seq",
+            allocationSize=1)
+    @GeneratedValue(
+            strategy = GenerationType.SEQUENCE,
+            generator="ticketimpl_id_seq"
+    )
     @Column(name = "id")
-    @GeneratedValue(strategy = GenerationType.AUTO)
     private long id;
 
     @ManyToOne
-    @JoinColumn(name = "event_id", nullable = false, referencedColumnName = "id")
-    private EventImpl eventImpl;
+    @JoinColumn(name = "eventimpl_id", referencedColumnName = "id", nullable = false)
+    private EventImpl event;
 
     @ManyToOne
-    @JoinColumn(name = "user_id", nullable = false, referencedColumnName = "id")
-    private UserImpl userImpl;
+    @JoinColumn(name = "userimpl_id", referencedColumnName = "id", nullable = false)
+    private UserImpl user;
 
     @Column(name = "category")
+    @Enumerated(EnumType.STRING)
     private Category category;
 
     @Column(name = "place")
@@ -38,22 +46,30 @@ public class TicketImpl implements Ticket {
         this.id = id;
     }
 
-    public EventImpl getEventImpl() {
-        return eventImpl;
+    @Override
+    public EventImpl getEvent() {
+        return event;
     }
 
-    public void setEventImpl(EventImpl eventImpl) {
-        this.eventImpl = eventImpl;
+    public long getEventId() {
+        return this.event.getId();
+    }
+
+    public void setEvent(EventImpl event) {
+        this.event = event;
     }
 
     @Override
-    public UserImpl getUserImpl() {
-        return userImpl;
+    public UserImpl getUser() {
+        return user;
     }
 
-    @Override
-    public void setUserImpl(UserImpl userImpl) {
-        this.userImpl = userImpl;
+    public long getUserId() {
+        return this.user.getId();
+    }
+
+    public void setUser(UserImpl user) {
+        this.user = user;
     }
 
     @Override
@@ -76,26 +92,25 @@ public class TicketImpl implements Ticket {
         this.place = place;
     }
 
-
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         TicketImpl ticket = (TicketImpl) o;
-        return id == ticket.id && place == ticket.place && Objects.equals(eventImpl, ticket.eventImpl) && Objects.equals(userImpl, ticket.userImpl) && category == ticket.category;
+        return id == ticket.id && place == ticket.place && Objects.equals(event, ticket.event) && Objects.equals(user, ticket.user) && category == ticket.category;
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, eventImpl, userImpl, category, place);
+        return Objects.hash(id, event, user, category, place);
     }
 
     @Override
     public String toString() {
         return "TicketImpl{" +
                 "id=" + id +
-                ", eventImpl=" + eventImpl +
-                ", userImpl=" + userImpl +
+                ", event=" + event +
+                ", user=" + user +
                 ", category=" + category +
                 ", place=" + place +
                 '}';

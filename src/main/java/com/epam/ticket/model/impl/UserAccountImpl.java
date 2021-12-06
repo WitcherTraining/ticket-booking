@@ -1,24 +1,32 @@
 package com.epam.ticket.model.impl;
 
+import com.epam.ticket.model.api.User;
 import com.epam.ticket.model.api.UserAccount;
 
 import javax.persistence.*;
 import java.util.Objects;
 
 @Entity
-@Table(name = "user_account")
+@Table(name = "user_account_impl")
 public class UserAccountImpl implements UserAccount {
 
     @Id
     @Column(name = "id")
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @SequenceGenerator(
+            name="user_account_impl_id_seq",
+            sequenceName="user_account_id_seq",
+            allocationSize=1)
+    @GeneratedValue(
+            strategy = GenerationType.SEQUENCE,
+            generator="user_account_impl_id_seq"
+    )
     private long id;
 
     @Column(name = "prepaid_money")
     private int prepaidMoney;
 
     @ManyToOne
-    @JoinColumn(name = "user_id", referencedColumnName = "id")
+    @JoinColumn(name = "eventimpl_id", referencedColumnName = "id", nullable = false)
     private UserImpl user;
 
     @Override
@@ -41,10 +49,12 @@ public class UserAccountImpl implements UserAccount {
         this.prepaidMoney = prepaidMoney;
     }
 
-    public UserImpl getUser() {
+    @Override
+    public User getUser() {
         return user;
     }
 
+    @Override
     public void setUser(UserImpl user) {
         this.user = user;
     }

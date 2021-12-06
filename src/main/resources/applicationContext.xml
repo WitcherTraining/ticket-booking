@@ -19,10 +19,10 @@
     <bean id="userDAO" class="com.epam.ticket.dao.impl.UserDAOImpl"/>
     <bean id="ticketDAO" class="com.epam.ticket.dao.impl.TicketDAOImpl"/>
     <bean id="eventDAO" class="com.epam.ticket.dao.impl.EventDAOImpl"/>
-    <bean id="storage" class="com.epam.ticket.dao.impl.Storage"/>
     <bean id="initialData" class="com.epam.ticket.InitialData"/>
+    <bean id="initDBServiceImpl" class="com.epam.ticket.service.impl.InitDBServiceImpl"/>
 
-    <bean id="xmlUnmarshaller" class="com.epam.ticket.dao.impl.XmlUnmarshaller">
+    <bean id="xmlUnmarshaller" class="com.epam.ticket.dao.XmlUnmarshaller">
         <property name="marshaller" ref="castorMarshaller"/>
         <property name="unmarshaller" ref="castorMarshaller"/>
     </bean>
