@@ -8,18 +8,18 @@ import java.util.List;
 import java.util.Objects;
 
 @Entity
-@Table(name = "userimpl")
+@Table(name = "user_table")
 public class UserImpl implements User {
 
     @Id
     @Column(name = "id")
     @SequenceGenerator(
-            name = "userimpl_id_seq",
+            name = "user_id_seq",
             sequenceName = "user_id_seq",
             allocationSize = 1)
     @GeneratedValue(
             strategy = GenerationType.SEQUENCE,
-            generator = "userimpl_id_seq"
+            generator = "user_id_seq"
     )
     private long id;
 

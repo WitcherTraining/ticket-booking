@@ -9,18 +9,18 @@ import java.util.List;
 import java.util.Objects;
 
 @Entity
-@Table(name = "eventimpl")
+@Table(name = "event")
 public class EventImpl implements Event {
 
     @Id
     @Column(name = "id")
     @SequenceGenerator(
-            name="eventimpl_id_seq",
+            name="event_id_seq",
             sequenceName="event_id_seq",
             allocationSize=1)
     @GeneratedValue(
             strategy = GenerationType.SEQUENCE,
-            generator="eventimpl_id_seq"
+            generator="event_id_seq"
     )
     private long Id;
 

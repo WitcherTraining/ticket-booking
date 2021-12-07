@@ -6,17 +6,17 @@ import javax.persistence.*;
 import java.util.Objects;
 
 @Entity
-@Table(name = "ticketimpl")
+@Table(name = "ticket")
 public class TicketImpl implements Ticket {
 
     @Id
     @SequenceGenerator(
-            name="ticketimpl_id_seq",
+            name="ticket_id_seq",
             sequenceName="ticket_id_seq",
             allocationSize=1)
     @GeneratedValue(
             strategy = GenerationType.SEQUENCE,
-            generator="ticketimpl_id_seq"
+            generator="ticket_id_seq"
     )
     @Column(name = "id")
     private long id;

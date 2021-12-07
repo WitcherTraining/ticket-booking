@@ -7,18 +7,18 @@ import javax.persistence.*;
 import java.util.Objects;
 
 @Entity
-@Table(name = "user_account_impl")
+@Table(name = "user_account")
 public class UserAccountImpl implements UserAccount {
 
     @Id
     @Column(name = "id")
     @SequenceGenerator(
-            name="user_account_impl_id_seq",
+            name="user_account_id_seq",
             sequenceName="user_account_id_seq",
             allocationSize=1)
     @GeneratedValue(
             strategy = GenerationType.SEQUENCE,
-            generator="user_account_impl_id_seq"
+            generator="user_account_id_seq"
     )
     private long id;
 
