@@ -27,6 +27,11 @@ import java.util.List;
 public class TicketSpecificController {
 
     public static final String TICKETS_PDF = "myTickets.pdf";
+    public static final String APPLICATION_PDF = "application/pdf";
+    public static final String OUTPUT_NAME = "tickets.pdf";
+    public static final String CONTENT_DISPOSITION = "content-disposition";
+    public static final String INLINE_FILENAME = "inline;filename=";
+    public static final String CACHE_CONTROL_OPTIONS = "must-revalidate, post-check=0, pre-check=0";
     private BookingFacade bookingFacade;
 
     public TicketSpecificController(BookingFacade bookingFacade) {
@@ -72,12 +77,12 @@ public class TicketSpecificController {
         final byte[] outputPDF = Files.readAllBytes(pdfPath);
 
         final HttpHeaders headers = new HttpHeaders();
-        headers.setContentType(MediaType.parseMediaType("application/pdf"));
-        final String outputFilename = "tickets.pdf";
-        headers.add("content-disposition", "inline;filename=" + outputFilename);
+        headers.setContentType(MediaType.parseMediaType(APPLICATION_PDF));
+        final String outputFilename = OUTPUT_NAME;
+        headers.add(CONTENT_DISPOSITION, INLINE_FILENAME + outputFilename);
 
         headers.setContentDispositionFormData(outputFilename, outputFilename);
-        headers.setCacheControl("must-revalidate, post-check=0, pre-check=0");
+        headers.setCacheControl(CACHE_CONTROL_OPTIONS);
         final ResponseEntity<byte[]> response = new ResponseEntity<>(outputPDF, headers, HttpStatus.OK);
         return response;
     }
